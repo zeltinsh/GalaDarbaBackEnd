@@ -1,32 +1,41 @@
 package org.kaspars.pasakumaBE.Services;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.kaspars.pasakumaBE.interfaces.UserServiceInterface;
+import org.kaspars.pasakumaBE.model.UserDTO;
 import org.kaspars.pasakumaBE.model.UserModel;
-import org.kaspars.pasakumaBE.repository.PasakumaInterface;
+import org.kaspars.pasakumaBE.repository.UserRepository;
 import org.springframework.stereotype.Service;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Service
 
-public class UserServices {
-    private final PasakumaInterface repository;
+public class UserServices implements UserServiceInterface {
+    private final UserRepository userRepository;
 
-    // @Id
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // private Long id;
+    public UserDTO findOrSaveUser(UserModel user) {
+        try {
+            Optional<UserModel> existingUser = userRepository.findByNameAndPassword(user.getName(), user.getPassword());
+            if (existingUser.isPresent()) {
+                return new UserDTO(existingUser.get().getId(), existingUser.get().getBookedEvents());
 
-    public List<UserModel> getAllUsers() {
-        return repository.findAll();
+            } else {
+                UserModel savedUser = userRepository.save(user);
+                if (savedUser != null && savedUser.getId() != null) {
+                    return new UserDTO(savedUser.getId(), 0);
+                }
+            }
+        } catch (Exception e) {
+
+        }
+        return null; // Return null if user cannot be found or saved
     }
 
-    public int addUser(UserModel user) {
-        repository.save(user);
-        return Math.toIntExact(user.getId());
-    }
-
+    // public List<UserModel> getAllUsers() {
+    // return userRepository.findAll();
+    // }
 }

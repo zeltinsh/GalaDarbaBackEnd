@@ -28,4 +28,5 @@ public class UserModel { // Sis ir domens. UserModel
     @Column(name = "password")
     @NotBlank(message = "Password cannot be blank")
     private String password; // String ir reference klase, jo nevar buti null
+    private int bookedEvents; // Cik pasākumus lietotājs ir rezervējis
 }

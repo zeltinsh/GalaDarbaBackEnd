@@ -3,6 +3,7 @@ package org.kaspars.pasakumaBE.controller;
 import java.util.List;
 
 import org.kaspars.pasakumaBE.Services.UserServices;
+import org.kaspars.pasakumaBE.model.UserDTO;
 import org.kaspars.pasakumaBE.model.UserModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,21 +33,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class UserController {
     private final UserServices userServices;
 
-    @GetMapping("/user")
-    public List<UserModel> getAllUsers() { // @RequestParam(required = false) String name
-        return userServices.getAllUsers(); // name
+    @PostMapping("/user")
+    public ResponseEntity<UserDTO> addUser(@Valid @RequestBody UserModel user) {
+        try {
+            UserDTO userDTO = userServices.findOrSaveUser(user);
+            if (userDTO == null) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
+        } catch (Exception _) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @PutMapping("user/{id}")
-    public String addUser(@RequestBody UserModel user) {
-        int userId = userServices.addUser(user);
-        return String.valueOf(userId);
-    }
-    // @PostMapping("/user")
-    // public ResponseEntity<Long> addUser(@Valid @RequestBody UserModel user) {
-    // Long userid = userServices.addUser(user);
-    // return ResponseEntity.ok(userid);
+    // @GetMapping("/user")
+    // public List<UserModel> getAllUsers() { // @RequestParam(required = false)
+    // String name
+    // return userServices.getAllUsers(); // name
     // }
-
 }
