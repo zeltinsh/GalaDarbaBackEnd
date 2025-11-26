@@ -35,7 +35,4 @@ public class UserServices implements UserServiceInterface {
         return null; // Return null if user cannot be found or saved
     }
 
-    // public List<UserModel> getAllUsers() {
-    // return userRepository.findAll();
-    // }
 }

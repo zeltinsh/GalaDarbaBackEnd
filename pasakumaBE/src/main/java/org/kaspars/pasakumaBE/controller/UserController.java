@@ -46,9 +46,4 @@ public class UserController {
         }
     }
 
-    // @GetMapping("/user")
-    // public List<UserModel> getAllUsers() { // @RequestParam(required = false)
-    // String name
-    // return userServices.getAllUsers(); // name
-    // }
 }
