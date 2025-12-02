@@ -14,21 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import lombok.AllArgsConstructor;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @CrossOrigin(origins = "http://localhost:4200")
-@RestController // Lai spring boot zinatu ka tas ir kontrolieris
+@RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1")
-
-// jāraksta metode, kas pievieno lietotāju. Ķer, ienākošo trafiku un nodod to
-// servisam
-// CRUD operatori - Create, Read, Update, Delete
-// POST, GET, PUT, DELETE - šor raksta frontendā
 
 public class UserController {
     private final UserServices userServices;
