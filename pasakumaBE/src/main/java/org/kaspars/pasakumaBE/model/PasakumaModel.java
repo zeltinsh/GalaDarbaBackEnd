@@ -20,6 +20,6 @@ public class PasakumaModel {
     String pasakumaVieta;
     String pasakumaApraksts;
     String pasakumaLaiks;
-    double dalibniekuSkaits;
+    Integer dalibniekuSkaits;
 
 }
